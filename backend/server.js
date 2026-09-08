@@ -46,6 +46,53 @@ app.use(
 app.use(express.json());
 
 // =========================
+// MONGODB CONNECTION
+// =========================
+
+let mongoConnectionPromise = null;
+
+const connectMongoDB = async () => {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (!mongoConnectionPromise) {
+    mongoConnectionPromise = mongoose
+      .connect(process.env.MONGO_URI)
+      .then(() => {
+        console.log("MongoDB Connected Successfully");
+      })
+      .catch((error) => {
+        mongoConnectionPromise = null;
+
+        console.error(
+          "MongoDB Connection Failed:",
+          error.message
+        );
+
+        throw error;
+      });
+  }
+
+  await mongoConnectionPromise;
+};
+
+// =========================
+// DATABASE MIDDLEWARE
+// =========================
+
+app.use(async (req, res, next) => {
+  try {
+    await connectMongoDB();
+    next();
+  } catch (error) {
+    res.status(500).json({
+      message: "Database connection failed.",
+    });
+  }
+});
+
+// =========================
 // API ROUTES
 // =========================
 
@@ -110,32 +157,32 @@ app.get("/", (req, res) => {
 });
 
 // =========================
-// SERVER PORT
+// HEALTH CHECK
 // =========================
 
-const PORT =
-  process.env.PORT || 5000;
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    message: "Backend is healthy!",
+  });
+});
 
 // =========================
-// MONGODB CONNECTION
+// LOCAL SERVER
 // =========================
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
+const PORT = process.env.PORT || 5000;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
     console.log(
-      "MongoDB Connected Successfully"
-    );
-
-    app.listen(PORT, () => {
-      console.log(
-        `Server is running on http://localhost:${PORT}`
-      );
-    });
-  })
-  .catch((error) => {
-    console.error(
-      "MongoDB Connection Failed:",
-      error.message
+      `Server is running on http://localhost:${PORT}`
     );
   });
+}
+
+// =========================
+// EXPORT EXPRESS APP
+// =========================
+
+module.exports = app;
