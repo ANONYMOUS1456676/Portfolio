@@ -4,6 +4,10 @@ const ContactMessage = require("../models/contactMessage");
 
 const router = express.Router();
 
+// =========================
+// EMAIL TRANSPORTER
+// =========================
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -12,11 +16,18 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// =========================
+// SEND CONTACT MESSAGE
+// =========================
+
 router.post("/", async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    // Validate required fields
+    // =========================
+    // VALIDATE REQUIRED FIELDS
+    // =========================
+
     if (!name || !email || !message) {
       return res.status(400).json({
         message:
@@ -36,14 +47,22 @@ router.post("/", async (req, res) => {
       });
 
     // =========================
-    // SEND EMAIL
+    // SEND SUCCESS RESPONSE
+    // =========================
+
+    res.status(201).json({
+      message: "Message sent successfully!",
+      contactMessage,
+    });
+
+    // =========================
+    // EMAIL NOTIFICATION
     // =========================
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.CONTACT_EMAIL,
       replyTo: email,
-
       subject: `Portfolio Contact: Message from ${name}`,
 
       text: `
@@ -53,6 +72,7 @@ Name: ${name}
 Email: ${email}
 
 Message:
+
 ${message}
       `,
 
@@ -84,28 +104,25 @@ ${message}
           </p>
 
           <p>
-            ${message.replace(
-              /\n/g,
-              "<br />"
-            )}
+            ${message.replace(/\n/g, "<br />")}
           </p>
         </div>
       `,
     };
 
-    await transporter.sendMail(
-      mailOptions
-    );
-
-    console.log(
-      "Contact message saved and email sent successfully!"
-    );
-
-    res.status(201).json({
-      message:
-        "Message sent successfully!",
-      contactMessage,
-    });
+    transporter
+      .sendMail(mailOptions)
+      .then(() => {
+        console.log(
+          "Contact email sent successfully!"
+        );
+      })
+      .catch((error) => {
+        console.error(
+          "Contact email failed:",
+          error.message
+        );
+      });
   } catch (error) {
     console.error(
       "Contact message error:",
@@ -114,7 +131,7 @@ ${message}
 
     res.status(500).json({
       message:
-        "Failed to send message. Please try again.",
+        "Failed to save message. Please try again.",
     });
   }
 });
