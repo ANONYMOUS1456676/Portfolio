@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminBlogs from "./AdminBlogs";
 
@@ -163,15 +163,14 @@ const Admin = () => {
     navigate("/admin");
   };
 
-  // =========================
-  // UNAUTHORIZED
-  // =========================
+ // =========================
+// UNAUTHORIZED
+// =========================
 
-  const handleUnauthorized = () => {
-    localStorage.removeItem("adminToken");
-    navigate("/admin");
-  };
-
+const handleUnauthorized = React.useCallback(() => {
+  localStorage.removeItem("adminToken");
+  navigate("/admin");
+}, [navigate]);
   // =========================
   // FETCH PROJECTS
   // =========================
@@ -360,7 +359,7 @@ const Admin = () => {
   // FETCH CONTACT MESSAGES
   // =========================
 
-  const fetchContactMessages = async () => {
+  const fetchContactMessages = useCallback(async () => {
     try {
       setContactMessagesLoading(true);
 
@@ -412,7 +411,7 @@ const Admin = () => {
     } finally {
       setContactMessagesLoading(false);
     }
-  };
+  }, [handleUnauthorized]);
 
   // =========================
   // MARK MESSAGE AS READ
@@ -554,7 +553,7 @@ const Admin = () => {
     fetchTheme();
     fetchStats();
     fetchContactMessages();
-  }, []);
+  }, [fetchContactMessages]);
 
   // =========================
   // THEME CHANGE
@@ -1216,93 +1215,9 @@ const Admin = () => {
   // RETURN
   // =========================
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-800 text-white">
-      {/* ========================= */}
-      {/* ADMIN SIDEBAR */}
-      {/* ========================= */}
-
-      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-gray-950 border-r border-gray-800 p-6 flex-col z-50">
-        <h2 className="text-2xl font-bold text-cyan-400 mb-8">
-          Admin Panel
-        </h2>
-
-        <nav className="flex-1 space-y-2 overflow-y-auto">
-          <button
-            type="button"
-            onClick={() => scrollToSection("dashboard-overview")}
-            className="w-full text-left px-4 py-3 rounded-md hover:bg-gray-800 transition"
-          >
-            Dashboard
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection("theme-customization")}
-            className="w-full text-left px-4 py-3 rounded-md hover:bg-gray-800 transition"
-          >
-            Theme
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection("portfolio-content")}
-            className="w-full text-left px-4 py-3 rounded-md hover:bg-gray-800 transition"
-          >
-            Portfolio
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection("about-content")}
-            className="w-full text-left px-4 py-3 rounded-md hover:bg-gray-800 transition"
-          >
-            About
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection("project-management")}
-            className="w-full text-left px-4 py-3 rounded-md hover:bg-gray-800 transition"
-          >
-            Projects
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection("contact-messages")}
-            className="w-full text-left px-4 py-3 rounded-md hover:bg-gray-800 transition"
-          >
-            Contact Messages
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection("blog-management")}
-            className="w-full text-left px-4 py-3 rounded-md hover:bg-gray-800 transition"
-          >
-            Blogs
-          </button>
-        </nav>
-
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="w-full px-4 py-3 mt-6 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700 transition"
-        >
-          Logout
-        </button>
-      </aside>
-
-      <main className="md:ml-64 p-8">
-        <div className="max-w-screen-lg mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-black to-gray-800 text-white p-8">
+      <div className="max-w-screen-lg mx-auto">
 
         {/* ========================= */}
         {/* HEADER */}
@@ -1325,10 +1240,7 @@ const Admin = () => {
         {/* DASHBOARD OVERVIEW */}
         {/* ========================= */}
 
-        <h2
-          id="dashboard-overview"
-          className="text-3xl font-bold text-center mb-8 scroll-mt-6"
-        >
+        <h2 className="text-3xl font-bold text-center mb-8">
           Dashboard Overview
         </h2>
 
@@ -1414,10 +1326,7 @@ const Admin = () => {
         {/* THEME CUSTOMIZATION */}
         {/* ========================= */}
 
-        <h2
-          id="theme-customization"
-          className="text-3xl font-bold text-center mb-8 scroll-mt-6"
-        >
+        <h2 className="text-3xl font-bold text-center mb-8">
           Theme Customization
         </h2>
 
@@ -1546,10 +1455,7 @@ const Admin = () => {
         {/* PORTFOLIO CONTENT */}
         {/* ========================= */}
 
-        <h2
-          id="portfolio-content"
-          className="text-3xl font-bold text-center mb-8 scroll-mt-6"
-        >
+        <h2 className="text-3xl font-bold text-center mb-8">
           Portfolio Content Management
         </h2>
 
@@ -1671,10 +1577,7 @@ const Admin = () => {
         {/* ABOUT CONTENT */}
         {/* ========================= */}
 
-        <h2
-          id="about-content"
-          className="text-3xl font-bold text-center mb-8 scroll-mt-6"
-        >
+        <h2 className="text-3xl font-bold text-center mb-8">
           About Content Management
         </h2>
 
@@ -1771,10 +1674,7 @@ const Admin = () => {
         {/* PROJECT MANAGEMENT */}
         {/* ========================= */}
 
-        <h2
-          id="project-management"
-          className="text-3xl font-bold text-center mb-8 scroll-mt-6"
-        >
+        <h2 className="text-3xl font-bold text-center mb-8">
           Project Management
         </h2>
 
@@ -2241,17 +2141,13 @@ const Admin = () => {
         {/* BLOG MANAGEMENT */}
         {/* ========================= */}
 
-        <div
-          id="blog-management"
-          className="mt-16 scroll-mt-6"
-        >
+        <div className="mt-16">
 
           <AdminBlogs />
 
         </div>
 
-        </div>
-      </main>
+      </div>
     </div>
   );
 };
