@@ -7,25 +7,25 @@ import AdminBlogs from "./AdminBlogs";
 // =========================
 
 const PROJECT_API_URL =
-  "http://localhost:5000/api/projects";
+  "https://portfolio-m7y8.onrender.com/api/projects";
 
 const UPLOAD_API_URL =
-  "http://localhost:5000/api/upload";
+  "https://portfolio-m7y8.onrender.com/api/upload";
 
 const PORTFOLIO_CONTENT_API_URL =
-  "http://localhost:5000/api/portfolio-content";
+  "https://portfolio-m7y8.onrender.com/api/portfolio-content";
 
 const ABOUT_API_URL =
-  "http://localhost:5000/api/about";
+  "https://portfolio-m7y8.onrender.com/api/about";
 
 const THEME_API_URL =
-  "http://localhost:5000/api/theme";
+  "https://portfolio-m7y8.onrender.com/api/theme";
 
 const STATS_API_URL =
-  "http://localhost:5000/api/stats";
+  "https://portfolio-m7y8.onrender.com/api/stats";
 
 const CONTACT_MESSAGES_API_URL =
-  "http://localhost:5000/api/contact-messages";
+  "https://portfolio-m7y8.onrender.com/api/contact-messages";
 
 // =========================
 // ADMIN COMPONENT

@@ -24,7 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:5000/api/portfolio-content"
+      "https://portfolio-m7y8.onrender.com/api/portfolio-content"
     )
       .then((response) => {
         if (!response.ok) {

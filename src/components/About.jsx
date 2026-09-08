@@ -21,7 +21,7 @@ const About = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:5000/api/about"
+      "https://portfolio-m7y8.onrender.com/api/about"
     )
       .then((response) => {
         if (!response.ok) {

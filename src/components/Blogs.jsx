@@ -22,7 +22,7 @@ const Blogs = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:5000/api/blogs"
+      "https://portfolio-m7y8.onrender.com/api/blogs"
     )
       .then((response) => {
         if (!response.ok) {

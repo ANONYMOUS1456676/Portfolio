@@ -10,7 +10,7 @@ const BlogDetails = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/blogs/${id}`)
+    fetch(`https://portfolio-m7y8.onrender.com/api/blogs/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Blog not found");
