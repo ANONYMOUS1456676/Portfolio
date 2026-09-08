@@ -22,7 +22,7 @@ const Blogs = () => {
 
   useEffect(() => {
     fetch(
-      "https://portfolio-m7y8.onrender.com/api/blogs"
+      "https://portfolio-backend-eight-cyan.vercel.app/api/blogs"
     )
       .then((response) => {
         if (!response.ok) {

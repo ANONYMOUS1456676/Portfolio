@@ -21,7 +21,7 @@ const About = () => {
 
   useEffect(() => {
     fetch(
-      "https://portfolio-m7y8.onrender.com/api/about"
+      "https://portfolio-backend-eight-cyan.vercel.app/api/about"
     )
       .then((response) => {
         if (!response.ok) {

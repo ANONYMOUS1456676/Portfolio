@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const API_URL = "https://portfolio-m7y8.onrender.com/api/blogs";
-const UPLOAD_API_URL = "https://portfolio-m7y8.onrender.com/api/upload";
+const API_URL = "https://portfolio-backend-eight-cyan.vercel.app/api/blogs";
+const UPLOAD_API_URL = "https://portfolio-backend-eight-cyan.vercel.app/api/upload";
 
 const AdminBlogs = () => {
   const [blogs, setBlogs] = useState([]);

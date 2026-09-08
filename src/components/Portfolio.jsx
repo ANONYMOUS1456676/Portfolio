@@ -16,7 +16,7 @@ const Portfolio = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("https://portfolio-m7y8.onrender.com/api/projects")
+    fetch("https://portfolio-backend-eight-cyan.vercel.app/api/projects")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch projects");

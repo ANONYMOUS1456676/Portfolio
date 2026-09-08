@@ -24,7 +24,7 @@ const ThemeProvider = ({ children }) => {
     const fetchTheme = async () => {
       try {
         const response = await fetch(
-          "https://portfolio-m7y8.onrender.com/api/theme"
+          "https://portfolio-backend-eight-cyan.vercel.app/api/theme"
         );
 
         if (!response.ok) {

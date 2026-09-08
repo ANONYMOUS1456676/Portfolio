@@ -24,7 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     fetch(
-      "https://portfolio-m7y8.onrender.com/api/portfolio-content"
+      "https://portfolio-backend-eight-cyan.vercel.app/api/portfolio-content"
     )
       .then((response) => {
         if (!response.ok) {

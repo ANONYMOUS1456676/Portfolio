@@ -23,7 +23,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        "https://portfolio-m7y8.onrender.com/api/contact",
+        "https://portfolio-backend-eight-cyan.vercel.app/api/contact",
         {
           method: "POST",
           headers: {
